@@ -1,0 +1,43 @@
+.hero{
+  background: url('../img/hero-unit-background-desktop.jpg');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  padding: 24px 0;
+
+  .hero-header{
+    color: white;
+  }
+
+  .hero-sub-header{
+    color: #9ACFF6;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 3px;
+    font-size: 24px;
+    margin-bottom: 50px;
+  }
+
+  .hero-paragraph{
+    color: #ffffff;
+    line-height: 163.4%;
+    font-weight: 400;
+    font-size: 19px;
+    word-spacing: 3%;
+  }
+}
+
+@media only screen and (max-width: 576px){
+  .hero{
+    background: url('../img/hero-unit-background-mobile.jpg');
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+    .hero-header{
+      font-size: 40px;
+    }
+    .hero-sub-header{
+      font-size: 14px;
+    }
+  }
+}
