@@ -1,0 +1,33 @@
+html, body {
+  font-family: 'Open Sans', sans-serif;
+  color: #0B3757;
+}
+
+h1 {
+  font-size: 74px;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 36px;
+  font-weight: 700;
+  letter-spacing: -1.5px;
+}
+
+p {
+  font-size: 16px;
+  margin: 20px 0;
+}
+
+.img-circle {
+  border-radius: 50px;
+}
+
+a {
+  color: #9ACFF6;
+  // text-decoration: underline;
+
+  &:hover, &:focus, &:active {
+    color: darken($color: #9ACFF6, $amount: 15%)
+  }
+}
