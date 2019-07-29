@@ -1,12 +1,16 @@
 .hero{
-  background: url('../img/hero-unit-background-desktop.jpg');
+  background-image: linear-gradient(
+    rgba(0, 0, 0, 0.4),
+    rgba(0, 0, 0, 0.4)
+  ), url('../img/bg.jpg');
+
   background-size: cover;
   background-position: center;
   min-height: 100vh;
   padding: 24px 0;
 
   .hero-header{
-    color: white;
+   color: white;
   }
 
   .hero-sub-header{
@@ -14,22 +18,28 @@
     text-transform: uppercase;
     font-weight: 600;
     letter-spacing: 3px;
-    font-size: 24px;
+    font-size: 26px;
     margin-bottom: 50px;
+    background: rgb(0, 0, 0); /* fallback color */
+    background: rgba(0, 0, 0, 0.7);
+
   }
 
   .hero-paragraph{
     color: #ffffff;
     line-height: 163.4%;
     font-weight: 400;
-    font-size: 19px;
+    font-size: 21px;
     word-spacing: 3%;
   }
 }
 
 @media only screen and (max-width: 576px){
   .hero{
-    background: url('../img/hero-unit-background-mobile.jpg');
+    background-image: linear-gradient(
+    rgba(0, 0, 0, 0.4),
+    rgba(0, 0, 0, 0.4)
+  ), url('../img/bg.jpg');
     text-align: center;
     background-size: cover;
     background-position: center;
