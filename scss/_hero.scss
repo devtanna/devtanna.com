@@ -1,20 +1,18 @@
-.hero{
-  background-image: linear-gradient(
-    rgba(0, 0, 0, 0.4),
-    rgba(0, 0, 0, 0.4)
-  ), url('../img/bg.jpg');
+.hero {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url("../img/newme.jpg");
 
   background-size: cover;
   background-position: center;
   min-height: 100vh;
   padding: 24px 0;
 
-  .hero-header{
-   color: white;
+  .hero-header {
+    color: white;
   }
 
-  .hero-sub-header{
-    color: #9ACFF6;
+  .hero-sub-header {
+    color: #9acff6;
     text-transform: uppercase;
     font-weight: 600;
     letter-spacing: 3px;
@@ -22,10 +20,9 @@
     margin-bottom: 50px;
     background: rgb(0, 0, 0); /* fallback color */
     background: rgba(0, 0, 0, 0.7);
-
   }
 
-  .hero-paragraph{
+  .hero-paragraph {
     color: #ffffff;
     line-height: 163.4%;
     font-weight: 400;
@@ -34,19 +31,17 @@
   }
 }
 
-@media only screen and (max-width: 576px){
-  .hero{
-    background-image: linear-gradient(
-    rgba(0, 0, 0, 0.4),
-    rgba(0, 0, 0, 0.4)
-  ), url('../img/bg.jpg');
+@media only screen and (max-width: 576px) {
+  .hero {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+      url("../img/newme.jpg");
     text-align: center;
     background-size: cover;
     background-position: center;
-    .hero-header{
+    .hero-header {
       font-size: 40px;
     }
-    .hero-sub-header{
+    .hero-sub-header {
       font-size: 14px;
     }
   }
