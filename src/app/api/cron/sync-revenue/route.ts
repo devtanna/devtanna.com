@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { syncRevenue } from "@/lib/revenue/sync";
 
 export const dynamic = "force-dynamic";
