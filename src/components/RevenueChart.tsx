@@ -77,7 +77,9 @@ export function RevenueChart({
             fill={`url(#${gradientId})`}
             dot={false}
             activeDot={false}
-            isAnimationActive={false}
+            isAnimationActive
+            animationDuration={1400}
+            animationEasing="ease-out"
           />
         </AreaChart>
       </ResponsiveContainer>
