@@ -18,21 +18,17 @@ export function MoneyIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg viewBox="0 0 24 24" fill="none" aria-hidden {...props}>
       <rect
-        x="3"
+        x="2"
         y="6"
-        width="18"
+        width="20"
         height="12"
-        rx="2"
+        rx="3"
         stroke="currentColor"
         strokeWidth="2"
       />
       <circle cx="12" cy="12" r="2.5" stroke="currentColor" strokeWidth="2" />
-      <path
-        d="M6 9.5v5M18 9.5v5"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
+      <circle cx="5.5" cy="9.5" r="0.9" fill="currentColor" />
+      <circle cx="18.5" cy="14.5" r="0.9" fill="currentColor" />
     </svg>
   );
 }

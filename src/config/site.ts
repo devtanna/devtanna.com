@@ -24,8 +24,10 @@ export type Project = {
   name: string;
   /** One-line description under the name. */
   tagline: string;
-  /** Fallback emoji shown when the site favicon can't be loaded. */
+  /** Fallback emoji for the icon tile when the site favicon can't be loaded. */
   icon: string;
+  /** Background color for the icon tile. */
+  iconBg?: string;
   /** Link opened when the card is clicked. The site's favicon is used as the icon. */
   url?: string;
   /** Status tag: "active" | "building" | "discontinued" | "acquired". */
@@ -70,13 +72,13 @@ export const site: SiteConfig = {
   tagline: "Builder of products & problem solver",
   description:
     "Dev Tanna — builder of products and problem solver. A live look at my side projects and their revenue.",
-  location: "Munich, Germany",
+  location: "Munich",
   avatar: "/avatar.jpg",
   monthlyRevenue: "€ 300/m",
   url: "https://devtanna.com",
   // Update these to your own handles (remove any you don't use).
   socials: {
-    twitter: "https://twitter.com/devtanna",
+    twitter: "https://x.com/dev_in_tech",
     github: "https://github.com/devtanna",
     linkedin: "https://www.linkedin.com/in/devtanna",
   },
@@ -86,6 +88,7 @@ export const site: SiteConfig = {
       name: "German Language Practice",
       tagline: "Prepare for your Telc or Goethe exam with mock exams and exercises.",
       icon: "📝",
+      iconBg: "#111827",
       url: "https://www.germanlanguagepractice.com",
       status: "active",
       // Attach Stripe revenue by listing the IDs, e.g.:
@@ -94,9 +97,21 @@ export const site: SiteConfig = {
     {
       slug: "parseflow-io",
       name: "ParseFlow.io",
-      tagline: "A private offline",
-      icon: "🔒",
+      tagline: "A private offline-first AI powered document parsing MacOSX app for your PDFs, Docs, and more.",
+      icon: "�",
+      iconBg: "#111827",
       url: "https://www.parseflow.io",
+      status: "active",
+      // Attach Stripe revenue by listing the IDs, e.g.:
+      // stripe: { productIds: ["prod_abc123"], priceIds: ["price_abc123"] },
+    },
+    {
+      slug: "reply-hey",
+      name: "Reply Hey",
+      tagline: "Forms, inbound email, and AI-assisted replies—one workflow for teams that live on inbound demand.",
+      icon: "�",
+      iconBg: "#111827",
+      url: "https://www.replyhey.com",
       status: "active",
       // Attach Stripe revenue by listing the IDs, e.g.:
       // stripe: { productIds: ["prod_abc123"], priceIds: ["price_abc123"] },

@@ -49,16 +49,16 @@ export function ProfileHeader({
         {site.name}
       </h1>
 
-      <div className="mt-3 space-y-2">
-        <div className="flex items-center gap-2 text-lg text-muted">
-          <PinIcon className="h-5 w-5 text-muted" />
-          <span>{site.location}</span>
-        </div>
+      <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-lg text-muted">
+        <span className="flex items-center gap-2">
+          <PinIcon className="h-5 w-5" />
+          {site.location}
+        </span>
         {revenue ? (
-          <div className="flex items-center gap-2 text-lg text-muted">
-            <MoneyIcon className="h-5 w-5 text-muted" />
-            <span>{revenue}</span>
-          </div>
+          <span className="flex items-center gap-2">
+            <MoneyIcon className="h-5 w-5" />
+            {revenue}
+          </span>
         ) : null}
       </div>
 

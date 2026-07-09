@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     type: "profile",
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: "/avatar.jpg",
   },
 };
 
