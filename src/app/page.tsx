@@ -11,7 +11,7 @@ export default async function Home() {
 
   return (
     <main className="mx-auto min-h-screen w-full max-w-page px-6 py-12 md:py-20">
-      <div className="grid gap-10 md:grid-cols-[300px_1fr] md:gap-16">
+      <div className="grid gap-10 md:grid-cols-[300px_1fr] md:gap-12">
         <div className="md:sticky md:top-20 md:self-start">
           <ProfileHeader totalMrrCents={totalMrrCents} currency={currency} />
         </div>

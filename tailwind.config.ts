@@ -16,7 +16,7 @@ const config: Config = {
         page: "#f0f0f0",
       },
       maxWidth: {
-        page: "1080px",
+        page: "1280px",
       },
       boxShadow: {
         card: "0 1px 2px rgba(0,0,0,0.04), 0 6px 20px rgba(0,0,0,0.05)",
