@@ -43,5 +43,17 @@ export const projectStats = pgTable("project_stats", {
     .defaultNow(),
 });
 
+/**
+ * Stripe event IDs we've already handled — guards the sale-tweet webhook
+ * (src/app/api/webhooks/stripe) against Stripe's at-least-once delivery so a
+ * retry can't double-post a tweet.
+ */
+export const processedEvents = pgTable("processed_events", {
+  eventId: text("event_id").primaryKey(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
 export type RevenueSnapshot = typeof revenueSnapshots.$inferSelect;
 export type ProjectStat = typeof projectStats.$inferSelect;
