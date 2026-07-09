@@ -96,7 +96,7 @@ export const site: SiteConfig = {
       tagline: "Prepare for your Telc or Goethe exam with mock exams and exercises.",
       icon: "📝",
       iconBg: "#111827",
-      url: "https://www.germanlanguagepractice.com",
+      url: "https://www.germanlanguagepractice.com?utm_source=devtanna",
       status: "active",
       // Attach Stripe revenue by listing the IDs, e.g.:
       stripe: {
@@ -111,7 +111,7 @@ export const site: SiteConfig = {
       tagline: "A private offline-first AI powered document parsing MacOSX app for your PDFs, Docs, and more.",
       icon: "�",
       iconBg: "#111827",
-      url: "https://www.parseflow.io",
+      url: "https://www.parseflow.io?utm_source=devtanna",
       status: "active",
       stripe: {
         productIds: ["prod_UOWYALDV5FTPfI"],
@@ -125,18 +125,17 @@ export const site: SiteConfig = {
       tagline: "Forms, inbound email, and AI-assisted replies—one workflow for teams that live on inbound demand.",
       icon: "�",
       iconBg: "#111827",
-      url: "https://www.replyhey.com",
+      url: "https://www.replyhey.com?utm_source=devtanna",
       status: "active",
       // Attach Stripe revenue by listing the IDs, e.g.:
     },
-    ,
     {
       slug: "ideapulse",
       name: "IdeaPulse",
       tagline: "Get a full report on your startup idea's potential, including market size, competitors, and more.",
       icon: "�",
       iconBg: "#111827",
-      url: "",
+      url: "https://www.ideapulse.io?utm_source=devtanna",
       status: "discontinued",
       // Attach Stripe revenue by listing the IDs, e.g.:
       stripe: {
@@ -145,14 +144,13 @@ export const site: SiteConfig = {
         type: "one_time",
       },
     },
-    ,
     {
       slug: "craftihood",
       name: "Craftihood",
       tagline: "A marketplace for craft makers to sell their handmade products and connect with customers.",
       icon: "�",
       iconBg: "#111827",
-      url: "",
+      url: "https://www.craftihood.com?utm_source=devtanna",
       status: "discontinued",
       // Attach Stripe revenue by listing the IDs, e.g.:
     },
