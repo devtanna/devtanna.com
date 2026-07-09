@@ -12,6 +12,13 @@ export type StripeMapping = {
   priceIds?: string[];
   /** Stripe Product IDs (prod_...) that belong to this project. */
   productIds?: string[];
+  /**
+   * Revenue model. Default "recurring".
+   * - "recurring": headline badge = current MRR from active subscriptions.
+   * - "one_time": headline badge = this month's sales (paid invoices/checkout).
+   * Either way the chart shows the trailing 12 months of monthly revenue.
+   */
+  type?: "recurring" | "one_time";
 };
 
 /** Status tag shown on a project card. */
@@ -92,7 +99,11 @@ export const site: SiteConfig = {
       url: "https://www.germanlanguagepractice.com",
       status: "active",
       // Attach Stripe revenue by listing the IDs, e.g.:
-      // stripe: { productIds: ["prod_abc123"], priceIds: ["price_abc123"] },
+      stripe: {
+        productIds: ["prod_SdCqaYb1eyHm8L", "prod_ScPsiL2eTtW14Z", "prod_ScLzk6jgCiou5U", "prod_S66mImcI1wmfRt"],
+        priceIds: ["price_1RBuYlGoTXHj58pJuG2Wb9RN", "price_1Rh7H8GoTXHj58pJ6ABix341", "price_1RhB3DGoTXHj58pJdkNGxwrn", "price_1RhwQtGoTXHj58pJ4uNmdbxq"],
+        type: "one_time",
+      },
     },
     {
       slug: "parseflow-io",
@@ -102,8 +113,11 @@ export const site: SiteConfig = {
       iconBg: "#111827",
       url: "https://www.parseflow.io",
       status: "active",
-      // Attach Stripe revenue by listing the IDs, e.g.:
-      // stripe: { productIds: ["prod_abc123"], priceIds: ["price_abc123"] },
+      stripe: {
+        productIds: ["prod_UOWYALDV5FTPfI"],
+        priceIds: ["price_1TPjVnGoTXHj58pJM6WZBUAT"],
+        type: "one_time",
+      },
     },
     {
       slug: "reply-hey",
@@ -114,7 +128,6 @@ export const site: SiteConfig = {
       url: "https://www.replyhey.com",
       status: "active",
       // Attach Stripe revenue by listing the IDs, e.g.:
-      // stripe: { productIds: ["prod_abc123"], priceIds: ["price_abc123"] },
     },
   ],
 };

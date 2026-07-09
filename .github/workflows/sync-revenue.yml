@@ -1,0 +1,20 @@
+name: Sync revenue
+
+# Pulls Stripe → Neon once a day by calling the deployed sync endpoint.
+# Requires two things to be set:
+#   - Deployment (Vercel) has DATABASE_URL, STRIPE_SECRET_KEY, CRON_SECRET.
+#   - This repo has an Actions secret CRON_SECRET (same value as above).
+on:
+  schedule:
+    - cron: "0 6 * * *" # daily at 06:00 UTC
+  workflow_dispatch: {} # manual "Run workflow" button
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger revenue sync
+        run: |
+          curl -fsS --retry 3 --max-time 90 \
+            -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            "https://devtanna.com/api/cron/sync-revenue"

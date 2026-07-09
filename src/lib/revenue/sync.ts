@@ -237,9 +237,20 @@ export async function syncRevenue(): Promise<SyncResult> {
       });
   }
 
+  // Headline number per project: recurring → active-subscription MRR;
+  // one_time → this month's sales (equals the chart's latest point).
+  const currentMonth = months[MONTHS - 1];
+  const typeBySlug = new Map<string, "recurring" | "one_time">();
+  for (const p of site.projects) {
+    if (p.stripe) typeBySlug.set(p.slug, p.stripe.type ?? "recurring");
+  }
+
   const statRows = Array.from(mappedSlugs).map((slug) => ({
     projectSlug: slug,
-    mrrCents: mrr.get(slug) ?? 0,
+    mrrCents:
+      typeBySlug.get(slug) === "one_time"
+        ? buckets.get(slug)?.get(currentMonth) ?? 0
+        : mrr.get(slug) ?? 0,
     currency,
   }));
 
