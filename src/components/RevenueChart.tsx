@@ -31,7 +31,7 @@ export function RevenueChart({
   const ticks = [lowTick, max];
 
   return (
-    <div className="h-[150px] w-full">
+    <div className="h-[170px] w-full">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart
           data={data}
@@ -39,15 +39,15 @@ export function RevenueChart({
         >
           <defs>
             <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#f5a623" stopOpacity={0.35} />
+              <stop offset="0%" stopColor="#f5a623" stopOpacity={0.3} />
               <stop offset="100%" stopColor="#f5a623" stopOpacity={0} />
             </linearGradient>
           </defs>
           <CartesianGrid
-            stroke="#d9d9d9"
+            stroke="#e5e7eb"
             strokeDasharray="4 4"
             vertical
-            horizontal={false}
+            horizontal
           />
           <YAxis
             width={48}
@@ -65,7 +65,7 @@ export function RevenueChart({
             axisLine={false}
             tickLine={false}
             interval="preserveStartEnd"
-            minTickGap={24}
+            minTickGap={10}
             tick={{ fill: "#9ca3af", fontSize: 12 }}
             padding={{ left: 4, right: 4 }}
           />
@@ -73,7 +73,7 @@ export function RevenueChart({
             type="monotone"
             dataKey="amount"
             stroke="#f5a623"
-            strokeWidth={2.5}
+            strokeWidth={2}
             fill={`url(#${gradientId})`}
             dot={false}
             activeDot={false}
