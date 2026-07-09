@@ -14,7 +14,7 @@ export function StatusBadge({ status }: { status: ProjectStatus }) {
   const s = STATUS[status];
   return (
     <span
-      className={`inline-flex shrink-0 items-center gap-1 rounded-full px-2.5 py-1 text-sm font-semibold ${s.className}`}
+      className={`inline-flex shrink-0 items-center gap-1 rounded-full px-2 py-0.5 text-xs font-semibold ${s.className}`}
     >
       {s.emoji ? <span>{s.emoji}</span> : null}
       {s.label}

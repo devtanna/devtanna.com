@@ -27,42 +27,39 @@ export function ProjectCard({
 
   const inner = (
     <div className="h-full rounded-2xl bg-white p-6 shadow-card">
-      <div className="flex items-start justify-between gap-3">
-        <div className="flex min-w-0 items-center gap-3">
-          <span className="flex h-8 w-8 shrink-0 items-center justify-center text-2xl">
-            {favicon ? (
-              <img
-                src={favicon}
-                alt=""
-                width={32}
-                height={32}
-                className="h-8 w-8"
-              />
-            ) : (
-              project.icon
-            )}
-          </span>
-          <h2 className="truncate text-xl font-bold text-ink">
-            {project.name}
-          </h2>
-        </div>
-        <div className="flex shrink-0 items-center gap-2">
-          {hasRevenue ? (
-            <MrrBadge
-              mrrCents={revenue!.mrrCents!}
-              currency={revenue!.currency}
+      <div className="flex items-center gap-2">
+        <span className="flex h-6 w-6 shrink-0 items-center justify-center text-lg">
+          {favicon ? (
+            <img
+              src={favicon}
+              alt=""
+              width={24}
+              height={24}
+              className="h-6 w-6"
             />
-          ) : null}
-          {project.status ? <StatusBadge status={project.status} /> : null}
-        </div>
+          ) : (
+            project.icon
+          )}
+        </span>
+        <h2 className="min-w-0 flex-1 truncate text-base font-bold text-ink">
+          {project.name}
+        </h2>
+        {hasRevenue ? (
+          <MrrBadge
+            mrrCents={revenue!.mrrCents!}
+            currency={revenue!.currency}
+            type={project.stripe?.type}
+          />
+        ) : null}
+        {project.status ? <StatusBadge status={project.status} /> : null}
       </div>
 
-      <p className="mt-3 text-base leading-relaxed text-muted">
+      <p className="mt-2 text-sm leading-relaxed text-muted">
         {project.tagline}
       </p>
 
       {hasRevenue ? (
-        <div className="mt-5">
+        <div className="mt-4">
           <RevenueChart
             data={revenue!.chart}
             currency={revenue!.currency}

@@ -96,10 +96,11 @@ async function collectMonthly(
   sessionCount: number;
 }> {
   const buckets: Buckets = new Map();
-  const windowStart = Math.floor(
-    Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth() - (MONTHS - 1), 1) /
-      1000,
-  );
+  // Scan all Stripe history so one_time projects get a true all-time total.
+  // The chart still only renders the trailing 12 months (older buckets are
+  // ignored on read). ponytail: full-history scan each sync — fine at indie
+  // volume; add incremental/cached totals if the account grows large.
+  const windowStart = 0;
   let currency = "usd";
   let invoiceCount = 0;
   let sessionCount = 0;
@@ -276,19 +277,21 @@ export async function syncRevenue(): Promise<SyncResult> {
   }
 
   // Headline number per project: recurring → active-subscription MRR;
-  // one_time → this month's sales (equals the chart's latest point).
-  const currentMonth = months[MONTHS - 1];
+  // one_time → all-time earned (sum of every month collected).
   const typeBySlug = new Map<string, "recurring" | "one_time">();
   for (const p of site.projects) {
     if (p.stripe) typeBySlug.set(p.slug, p.stripe.type ?? "recurring");
   }
+  const allTime = (slug: string) => {
+    let total = 0;
+    for (const cents of buckets.get(slug)?.values() ?? []) total += cents;
+    return total;
+  };
 
   const statRows = Array.from(mappedSlugs).map((slug) => ({
     projectSlug: slug,
     mrrCents:
-      typeBySlug.get(slug) === "one_time"
-        ? buckets.get(slug)?.get(currentMonth) ?? 0
-        : mrr.get(slug) ?? 0,
+      typeBySlug.get(slug) === "one_time" ? allTime(slug) : mrr.get(slug) ?? 0,
     currency,
   }));
 
