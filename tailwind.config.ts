@@ -11,15 +11,15 @@ const config: Config = {
           soft: "#fbbf24",
           ring: "#fcd9a0",
         },
-        ink: "#1a1a1a",
+        ink: "#0f172a",
         muted: "#6b7280",
-        page: "#e6e6e6",
+        page: "#f0f0f0",
       },
       maxWidth: {
-        page: "640px",
+        page: "1080px",
       },
       boxShadow: {
-        card: "0 1px 3px rgba(0,0,0,0.06), 0 8px 24px rgba(0,0,0,0.04)",
+        card: "0 1px 2px rgba(0,0,0,0.04), 0 6px 20px rgba(0,0,0,0.05)",
       },
       borderRadius: {
         "4xl": "1.75rem",

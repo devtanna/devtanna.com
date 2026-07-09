@@ -1,7 +1,18 @@
+/* eslint-disable @next/next/no-img-element */
 import type { Project } from "@/config/site";
 import type { ProjectRevenue } from "@/lib/revenue/read";
 import { MrrBadge } from "./MrrBadge";
+import { StatusBadge } from "./StatusBadge";
 import { RevenueChart } from "./RevenueChart";
+
+/** The project site's favicon via Google's favicon service. */
+function faviconUrl(url: string): string | null {
+  try {
+    return `https://www.google.com/s2/favicons?domain=${new URL(url).hostname}&sz=64`;
+  } catch {
+    return null;
+  }
+}
 
 export function ProjectCard({
   project,
@@ -12,30 +23,43 @@ export function ProjectCard({
 }) {
   const hasRevenue =
     revenue && revenue.mrrCents !== null && revenue.chart.length > 0;
+  const favicon = project.url ? faviconUrl(project.url) : null;
 
   const inner = (
-    <div className="rounded-4xl bg-white p-6 shadow-card">
-      <div className="flex items-center justify-between gap-3">
+    <div className="h-full rounded-2xl bg-white p-6 shadow-card">
+      <div className="flex items-start justify-between gap-3">
         <div className="flex min-w-0 items-center gap-3">
-          <span
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-xl"
-            style={{ backgroundColor: project.iconBg ?? "#f3f4f6" }}
-          >
-            {project.icon}
+          <span className="flex h-8 w-8 shrink-0 items-center justify-center text-2xl">
+            {favicon ? (
+              <img
+                src={favicon}
+                alt=""
+                width={32}
+                height={32}
+                className="h-8 w-8"
+              />
+            ) : (
+              project.icon
+            )}
           </span>
-          <h2 className="truncate text-2xl font-extrabold text-ink">
+          <h2 className="truncate text-xl font-bold text-ink">
             {project.name}
           </h2>
         </div>
-        {hasRevenue ? (
-          <MrrBadge
-            mrrCents={revenue!.mrrCents!}
-            currency={revenue!.currency}
-          />
-        ) : null}
+        <div className="flex shrink-0 items-center gap-2">
+          {hasRevenue ? (
+            <MrrBadge
+              mrrCents={revenue!.mrrCents!}
+              currency={revenue!.currency}
+            />
+          ) : null}
+          {project.status ? <StatusBadge status={project.status} /> : null}
+        </div>
       </div>
 
-      <p className="mt-3 text-lg text-muted">{project.tagline}</p>
+      <p className="mt-3 text-base leading-relaxed text-muted">
+        {project.tagline}
+      </p>
 
       {hasRevenue ? (
         <div className="mt-5">

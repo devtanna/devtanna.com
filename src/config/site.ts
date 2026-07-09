@@ -14,6 +14,9 @@ export type StripeMapping = {
   productIds?: string[];
 };
 
+/** Status tag shown on a project card. */
+export type ProjectStatus = "active" | "building" | "discontinued" | "acquired";
+
 export type Project = {
   /** Stable unique key; used to store revenue rows. Don't change once live. */
   slug: string;
@@ -21,14 +24,23 @@ export type Project = {
   name: string;
   /** One-line description under the name. */
   tagline: string;
-  /** Emoji shown in the rounded icon tile (or set `iconBg` for a color). */
+  /** Fallback emoji shown when the site favicon can't be loaded. */
   icon: string;
-  /** Background color for the icon tile. */
-  iconBg?: string;
-  /** Link opened when the card is clicked. */
+  /** Link opened when the card is clicked. The site's favicon is used as the icon. */
   url?: string;
+  /** Status tag: "active" | "building" | "discontinued" | "acquired". */
+  status?: ProjectStatus;
   /** Which Stripe products/prices roll up into this project's revenue. */
   stripe?: StripeMapping;
+};
+
+/** Social profile links shown under the bio. Omit any you don't want. */
+export type Socials = {
+  twitter?: string;
+  github?: string;
+  linkedin?: string;
+  youtube?: string;
+  instagram?: string;
 };
 
 export type SiteConfig = {
@@ -48,6 +60,8 @@ export type SiteConfig = {
   monthlyRevenue: "auto" | string;
   /** The public URL of this page (used by the share button). */
   url: string;
+  /** Social profile links shown under the bio. */
+  socials?: Socials;
   projects: Project[];
 };
 
@@ -56,18 +70,34 @@ export const site: SiteConfig = {
   tagline: "Builder of products & problem solver",
   description:
     "Dev Tanna — builder of products and problem solver. A live look at my side projects and their revenue.",
-  location: "Prague",
+  location: "Munich, Germany",
   avatar: "/avatar.jpg",
-  monthlyRevenue: "auto",
+  monthlyRevenue: "€ 300/m",
   url: "https://devtanna.com",
+  // Update these to your own handles (remove any you don't use).
+  socials: {
+    twitter: "https://twitter.com/devtanna",
+    github: "https://github.com/devtanna",
+    linkedin: "https://www.linkedin.com/in/devtanna",
+  },
   projects: [
     {
-      slug: "placeholder-project",
-      name: "Placeholder Project",
-      tagline: "Swap this out for your own — edit src/config/site.ts",
-      icon: "🚀",
-      iconBg: "#111827",
-      url: "https://devtanna.com",
+      slug: "german-language-practice",
+      name: "German Language Practice",
+      tagline: "Prepare for your Telc or Goethe exam with mock exams and exercises.",
+      icon: "📝",
+      url: "https://www.germanlanguagepractice.com",
+      status: "active",
+      // Attach Stripe revenue by listing the IDs, e.g.:
+      // stripe: { productIds: ["prod_abc123"], priceIds: ["price_abc123"] },
+    },
+    {
+      slug: "parseflow-io",
+      name: "ParseFlow.io",
+      tagline: "A private offline",
+      icon: "🔒",
+      url: "https://www.parseflow.io",
+      status: "active",
       // Attach Stripe revenue by listing the IDs, e.g.:
       // stripe: { productIds: ["prod_abc123"], priceIds: ["price_abc123"] },
     },

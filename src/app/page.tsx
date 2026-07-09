@@ -10,19 +10,21 @@ export default async function Home() {
   const { bySlug, totalMrrCents, currency } = await getRevenue();
 
   return (
-    <main className="mx-auto min-h-screen w-full max-w-page px-5 pb-24 pt-10 sm:pt-14">
-      <ProfileHeader totalMrrCents={totalMrrCents} currency={currency} />
+    <main className="mx-auto min-h-screen w-full max-w-page px-6 py-12 md:py-20">
+      <div className="grid gap-10 md:grid-cols-[300px_1fr] md:gap-16">
+        <div className="md:sticky md:top-20 md:self-start">
+          <ProfileHeader totalMrrCents={totalMrrCents} currency={currency} />
+        </div>
 
-      <hr className="my-8 border-t border-black/10" />
-
-      <div className="space-y-5">
-        {site.projects.map((project) => (
-          <ProjectCard
-            key={project.slug}
-            project={project}
-            revenue={bySlug[project.slug]}
-          />
-        ))}
+        <div className="grid auto-rows-max gap-5 sm:grid-cols-2">
+          {site.projects.map((project) => (
+            <ProjectCard
+              key={project.slug}
+              project={project}
+              revenue={bySlug[project.slug]}
+            />
+          ))}
+        </div>
       </div>
     </main>
   );
