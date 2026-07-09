@@ -28,6 +28,7 @@ export async function GET(request: Request) {
 
   try {
     const result = await syncRevenue();
+    if (result.ok) revalidatePath("/"); // refresh the ISR-cached home page
     const status = result.ok ? 200 : 500;
     return NextResponse.json(result, { status });
   } catch (err) {
