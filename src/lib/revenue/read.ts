@@ -14,6 +14,15 @@ export type ProjectRevenue = {
 
 export type RevenueBySlug = Record<string, ProjectRevenue>;
 
+/** Flat trailing-12-month zero series, so cards with no revenue still show a chart. */
+export function emptyChart(): ChartPoint[] {
+  return trailingMonths(12).map((key) => ({
+    key,
+    label: monthLabel(key),
+    amount: 0,
+  }));
+}
+
 /** Layout-preview only: fake data when PREVIEW_REVENUE=1 (no DB/Stripe needed). */
 function mockRevenue(): {
   bySlug: RevenueBySlug;

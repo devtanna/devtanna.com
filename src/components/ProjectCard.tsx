@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import type { Project } from "@/config/site";
-import type { ProjectRevenue } from "@/lib/revenue/read";
+import { emptyChart, type ProjectRevenue } from "@/lib/revenue/read";
 import { MrrBadge } from "./MrrBadge";
 import { StatusBadge } from "./StatusBadge";
 import { RevenueChart } from "./RevenueChart";
@@ -21,8 +21,8 @@ export function ProjectCard({
   project: Project;
   revenue: ProjectRevenue | undefined;
 }) {
-  const hasRevenue =
-    revenue && revenue.mrrCents !== null && revenue.chart.length > 0;
+  const hasBadge = !!revenue && revenue.mrrCents !== null;
+  const chart = revenue?.chart.length ? revenue.chart : emptyChart();
   const favicon = project.url ? faviconUrl(project.url) : null;
 
   const inner = (
@@ -44,7 +44,7 @@ export function ProjectCard({
         <h2 className="min-w-0 flex-1 truncate text-base font-bold text-ink">
           {project.name}
         </h2>
-        {hasRevenue ? (
+        {hasBadge ? (
           <MrrBadge
             mrrCents={revenue!.mrrCents!}
             currency={revenue!.currency}
@@ -58,15 +58,13 @@ export function ProjectCard({
         {project.tagline}
       </p>
 
-      {hasRevenue ? (
-        <div className="mt-4">
-          <RevenueChart
-            data={revenue!.chart}
-            currency={revenue!.currency}
-            gradientId={`grad-${project.slug}`}
-          />
-        </div>
-      ) : null}
+      <div className="mt-4">
+        <RevenueChart
+          data={chart}
+          currency={revenue?.currency ?? "usd"}
+          gradientId={`grad-${project.slug}`}
+        />
+      </div>
     </div>
   );
 
