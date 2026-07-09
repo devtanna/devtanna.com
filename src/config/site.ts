@@ -81,7 +81,7 @@ export const site: SiteConfig = {
     "Dev Tanna — builder of products and problem solver. A live look at my side projects and their revenue.",
   location: "Munich",
   avatar: "/avatar.jpg",
-  monthlyRevenue: "€ 300/m",
+  monthlyRevenue: "€ 330/m",
   url: "https://devtanna.com",
   // Update these to your own handles (remove any you don't use).
   socials: {
