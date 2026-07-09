@@ -16,7 +16,7 @@ export default async function Home() {
           <ProfileHeader totalMrrCents={totalMrrCents} currency={currency} />
         </div>
 
-        <div className="grid auto-rows-max gap-6 sm:grid-cols-2">
+        <div className="grid min-w-0 auto-rows-max grid-cols-1 gap-6 sm:grid-cols-2">
           {site.projects.map((project) => (
             <ProjectCard
               key={project.slug}

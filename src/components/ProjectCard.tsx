@@ -26,7 +26,7 @@ export function ProjectCard({
   const favicon = project.url ? faviconUrl(project.url) : null;
 
   const inner = (
-    <div className="h-full rounded-2xl bg-white p-6 shadow-card">
+    <div className="h-full min-w-0 rounded-2xl bg-white p-6 shadow-card">
       <div className="flex items-center gap-2">
         <span className="flex h-6 w-6 shrink-0 items-center justify-center text-lg">
           {favicon ? (
@@ -76,7 +76,7 @@ export function ProjectCard({
         href={project.url}
         target="_blank"
         rel="noopener noreferrer"
-        className="block transition hover:-translate-y-0.5"
+        className="block min-w-0 transition hover:-translate-y-0.5"
       >
         {inner}
       </a>
