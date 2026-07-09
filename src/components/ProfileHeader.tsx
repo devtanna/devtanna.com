@@ -62,6 +62,10 @@ export function ProfileHeader({
         ) : null}
       </div>
 
+      <div className="mt-2 text-lg text-muted">
+        {site.projects.length} projects
+      </div>
+
       {site.tagline ? (
         <p className="mt-6 text-lg leading-relaxed text-muted md:text-xl">
           {site.tagline}

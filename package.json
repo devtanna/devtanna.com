@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
-    "db:push": "drizzle-kit push"
+    "db:push": "node --env-file=.env.local ./node_modules/drizzle-kit/bin.cjs push"
   },
   "dependencies": {
     "@neondatabase/serverless": "^0.10.4",

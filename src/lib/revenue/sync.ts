@@ -24,6 +24,7 @@ async function buildLookup(stripe: Stripe): Promise<ProjectLookup> {
   const resolves: Promise<void>[] = [];
 
   for (const project of site.projects) {
+    if (project.syncRevenue === false) continue;
     const map = project.stripe;
     if (!map) continue;
     for (const productId of map.productIds ?? []) {

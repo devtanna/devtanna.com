@@ -15,7 +15,8 @@ export type StripeMapping = {
   /**
    * Revenue model. Default "recurring".
    * - "recurring": headline badge = current MRR from active subscriptions.
-   * - "one_time": headline badge = this month's sales (paid invoices/checkout).
+   * - "one_time": headline badge = all-time revenue (sum of your entire Stripe
+   *   history, not just the last 12 months).
    * Either way the chart shows the trailing 12 months of monthly revenue.
    */
   type?: "recurring" | "one_time";
@@ -39,6 +40,8 @@ export type Project = {
   url?: string;
   /** Status tag: "active" | "building" | "discontinued" | "acquired". */
   status?: ProjectStatus;
+  /** Sync Stripe revenue for this project? Defaults to true when omitted. */
+  syncRevenue?: boolean;
   /** Which Stripe products/prices roll up into this project's revenue. */
   stripe?: StripeMapping;
 };
@@ -98,6 +101,7 @@ export const site: SiteConfig = {
       iconBg: "#111827",
       url: "https://www.germanlanguagepractice.com?utm_source=devtanna",
       status: "active",
+      syncRevenue: true,
       // Attach Stripe revenue by listing the IDs, e.g.:
       stripe: {
         productIds: ["prod_SdCqaYb1eyHm8L", "prod_ScPsiL2eTtW14Z", "prod_ScLzk6jgCiou5U", "prod_S66mImcI1wmfRt"],
@@ -113,6 +117,7 @@ export const site: SiteConfig = {
       iconBg: "#111827",
       url: "https://www.parseflow.io?utm_source=devtanna",
       status: "active",
+      syncRevenue: true,
       stripe: {
         productIds: ["prod_UOWYALDV5FTPfI"],
         priceIds: ["price_1TPjVnGoTXHj58pJM6WZBUAT"],
@@ -127,6 +132,7 @@ export const site: SiteConfig = {
       iconBg: "#111827",
       url: "https://www.replyhey.com?utm_source=devtanna",
       status: "active",
+      syncRevenue: true,
       // Attach Stripe revenue by listing the IDs, e.g.:
     },
     {
@@ -137,6 +143,7 @@ export const site: SiteConfig = {
       iconBg: "#111827",
       url: "https://www.ideapulse.io?utm_source=devtanna",
       status: "discontinued",
+      syncRevenue: true,
       // Attach Stripe revenue by listing the IDs, e.g.:
       stripe: {
         productIds: ["prod_RaIjfpWEHObfOn", "prod_RtNLoS8faLxOpD"],
@@ -152,6 +159,7 @@ export const site: SiteConfig = {
       iconBg: "#111827",
       url: "https://www.craftihood.com?utm_source=devtanna",
       status: "discontinued",
+      syncRevenue: false,
       // Attach Stripe revenue by listing the IDs, e.g.:
     },
   ],
