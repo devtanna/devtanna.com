@@ -2,7 +2,9 @@ import { NextResponse } from "next/server";
 import { syncRevenue } from "@/lib/revenue/sync";
 
 export const dynamic = "force-dynamic";
-export const maxDuration = 60;
+// Safety net so a first big sync completes and flushes logs; capped by your
+// Vercel plan (Hobby ~60s, Pro up to 300s). The real speedup is in sync.ts.
+export const maxDuration = 300;
 
 /**
  * Refreshes revenue from Stripe into Neon. Triggered daily by Vercel Cron

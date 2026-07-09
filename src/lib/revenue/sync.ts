@@ -21,6 +21,7 @@ type ProjectLookup = {
 async function buildLookup(stripe: Stripe): Promise<ProjectLookup> {
   const byProduct = new Map<string, string>();
   const byPrice = new Map<string, string>();
+  const resolves: Promise<void>[] = [];
 
   for (const project of site.projects) {
     const map = project.stripe;
@@ -30,17 +31,25 @@ async function buildLookup(stripe: Stripe): Promise<ProjectLookup> {
     }
     for (const priceId of map.priceIds ?? []) {
       byPrice.set(priceId, project.slug);
-      try {
-        const price = await stripe.prices.retrieve(priceId);
-        const product =
-          typeof price.product === "string" ? price.product : price.product?.id;
-        if (product) byProduct.set(product, project.slug);
-      } catch (err) {
-        console.warn(`[sync] could not resolve price ${priceId}:`, err);
-      }
+      // Resolve price -> product in parallel (each is a separate round trip).
+      resolves.push(
+        stripe.prices
+          .retrieve(priceId)
+          .then((price) => {
+            const product =
+              typeof price.product === "string"
+                ? price.product
+                : price.product?.id;
+            if (product) byProduct.set(product, project.slug);
+          })
+          .catch((err) =>
+            console.warn(`[sync] could not resolve price ${priceId}:`, err),
+          ),
+      );
     }
   }
 
+  await Promise.all(resolves);
   return { byProduct, byPrice };
 }
 
@@ -80,21 +89,30 @@ function addToBucket(
 async function collectMonthly(
   stripe: Stripe,
   lookup: ProjectLookup,
-): Promise<{ buckets: Buckets; currency: string }> {
+): Promise<{
+  buckets: Buckets;
+  currency: string;
+  invoiceCount: number;
+  sessionCount: number;
+}> {
   const buckets: Buckets = new Map();
   const windowStart = Math.floor(
     Date.UTC(new Date().getUTCFullYear(), new Date().getUTCMonth() - (MONTHS - 1), 1) /
       1000,
   );
   let currency = "usd";
+  let invoiceCount = 0;
+  let sessionCount = 0;
 
   // 1) Paid invoices
+  let mark = Date.now();
   for await (const invoice of stripe.invoices.list({
     status: "paid",
     created: { gte: windowStart },
     limit: 100,
     expand: ["data.lines.data.price"],
   })) {
+    invoiceCount++;
     const ts = invoice.status_transitions?.paid_at ?? invoice.created;
     const month = monthKey(new Date(ts * 1000));
     if (invoice.currency) currency = invoice.currency;
@@ -109,13 +127,21 @@ async function collectMonthly(
       if (slug) addToBucket(buckets, slug, month, line.amount);
     }
   }
+  console.log(
+    `[sync] invoices: ${invoiceCount} paid in ${Date.now() - mark}ms`,
+  );
 
-  // 2) Paid Checkout Sessions without an invoice (one-time payments)
+  // 2) Completed Checkout Sessions without an invoice (one-time payments).
+  // `status: "complete"` skips abandoned/expired sessions server-side — the
+  // difference between scanning a handful of sales and every checkout attempt.
+  mark = Date.now();
   for await (const session of stripe.checkout.sessions.list({
+    status: "complete",
     created: { gte: windowStart },
     limit: 100,
     expand: ["data.line_items", "data.line_items.data.price"],
   })) {
+    sessionCount++;
     if (session.payment_status !== "paid") continue;
     if (session.invoice) continue; // counted via invoices above
     const month = monthKey(new Date(session.created * 1000));
@@ -132,8 +158,11 @@ async function collectMonthly(
       if (slug) addToBucket(buckets, slug, month, item.amount_total ?? 0);
     }
   }
+  console.log(
+    `[sync] checkout sessions: ${sessionCount} complete in ${Date.now() - mark}ms`,
+  );
 
-  return { buckets, currency };
+  return { buckets, currency, invoiceCount, sessionCount };
 }
 
 /** Normalize a subscription item's amount to a monthly figure (in cents). */
@@ -190,7 +219,15 @@ export async function syncRevenue(): Promise<SyncResult> {
   if (!stripe) return { ok: false, reason: "STRIPE_SECRET_KEY not set" };
   if (!db) return { ok: false, reason: "DATABASE_URL not set" };
 
+  const started = Date.now();
+  let mark = started;
+  const lap = (label: string) => {
+    console.log(`[sync] ${label} +${Date.now() - mark}ms`);
+    mark = Date.now();
+  };
+
   const lookup = await buildLookup(stripe);
+  lap(`lookup: ${lookup.byPrice.size} prices, ${lookup.byProduct.size} products`);
   if (lookup.byProduct.size === 0 && lookup.byPrice.size === 0) {
     return { ok: true, reason: "no Stripe mappings in config", projectsSynced: 0 };
   }
@@ -199,6 +236,7 @@ export async function syncRevenue(): Promise<SyncResult> {
     collectMonthly(stripe, lookup),
     collectMrr(stripe, lookup),
   ]);
+  lap("stripe read done");
 
   const months = trailingMonths(MONTHS);
   const snapshotRows: (typeof schema.revenueSnapshots.$inferInsert)[] = [];
@@ -267,6 +305,9 @@ export async function syncRevenue(): Promise<SyncResult> {
         },
       });
   }
+
+  lap("db write done");
+  console.log(`[sync] total ${Date.now() - started}ms`);
 
   return {
     ok: true,
