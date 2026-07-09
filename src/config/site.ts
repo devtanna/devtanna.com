@@ -129,5 +129,32 @@ export const site: SiteConfig = {
       status: "active",
       // Attach Stripe revenue by listing the IDs, e.g.:
     },
+    ,
+    {
+      slug: "ideapulse",
+      name: "IdeaPulse",
+      tagline: "Get a full report on your startup idea's potential, including market size, competitors, and more.",
+      icon: "�",
+      iconBg: "#111827",
+      url: "",
+      status: "discontinued",
+      // Attach Stripe revenue by listing the IDs, e.g.:
+      stripe: {
+        productIds: ["prod_RaIjfpWEHObfOn", "prod_RtNLoS8faLxOpD"],
+        priceIds: ["price_1QyyVTGoTXHj58pJwQ8KrE86", "price_1Qj8LJGoTXHj58pJgWcnb3uy", "price_1Qh87fGoTXHj58pJmZqQk2sz", "price_1QzaahGoTXHj58pJkOWo3lkG"],
+        type: "one_time",
+      },
+    },
+    ,
+    {
+      slug: "craftihood",
+      name: "Craftihood",
+      tagline: "A marketplace for craft makers to sell their handmade products and connect with customers.",
+      icon: "�",
+      iconBg: "#111827",
+      url: "",
+      status: "discontinued",
+      // Attach Stripe revenue by listing the IDs, e.g.:
+    },
   ],
 };
