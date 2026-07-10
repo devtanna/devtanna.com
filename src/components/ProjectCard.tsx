@@ -23,7 +23,10 @@ export function ProjectCard({
 }) {
   const hasBadge = !!revenue && revenue.mrrCents !== null;
   const chart = revenue?.chart.length ? revenue.chart : emptyChart();
-  const favicon = project.url ? faviconUrl(project.url) : null;
+  const stealth = !!project.stealth;
+  // Favicon leaks the domain, so hide it in stealth mode.
+  const favicon = !stealth && project.url ? faviconUrl(project.url) : null;
+  const name = stealth ? project.name.replace(/\S/g, "•") : project.name;
 
   const inner = (
     <div className="h-full min-w-0 rounded-2xl bg-white p-6 shadow-card">
@@ -42,7 +45,7 @@ export function ProjectCard({
           )}
         </span>
         <h2 className="min-w-0 flex-1 truncate text-base font-bold text-ink">
-          {project.name}
+          {name}
         </h2>
         {hasBadge ? (
           <MrrBadge
@@ -51,11 +54,16 @@ export function ProjectCard({
             type={project.stripe?.type}
           />
         ) : null}
+        {stealth ? (
+          <span className="inline-flex shrink-0 items-center gap-1 rounded-full bg-slate-800 px-2 py-0.5 text-xs font-semibold text-slate-100">
+            🥷 Stealth
+          </span>
+        ) : null}
         {project.status ? <StatusBadge status={project.status} /> : null}
       </div>
 
-      <p className="mt-2 text-sm leading-relaxed text-muted">
-        {project.tagline}
+      <p className="mt-2 min-h-[2.844rem] text-sm leading-relaxed text-muted">
+        {project.tagline || "\u00A0"}
       </p>
 
       <div className="mt-4">
@@ -64,7 +72,7 @@ export function ProjectCard({
     </div>
   );
 
-  if (project.url) {
+  if (project.url && !stealth) {
     return (
       <a
         href={project.url}

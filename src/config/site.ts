@@ -40,6 +40,8 @@ export type Project = {
   url?: string;
   /** Status tag: "active" | "building" | "discontinued" | "acquired". */
   status?: ProjectStatus;
+  /** Stealth mode: obfuscate the name, add a "Stealth" tag, and disable the link. */
+  stealth?: boolean;
   /** Sync Stripe revenue for this project? Defaults to true when omitted. */
   syncRevenue?: boolean;
   /** Which Stripe products/prices roll up into this project's revenue. */
@@ -133,6 +135,18 @@ export const site: SiteConfig = {
       url: "https://www.replyhey.com?utm_source=devtanna",
       status: "active",
       syncRevenue: true,
+      // Attach Stripe revenue by listing the IDs, e.g.:
+    },
+    {
+      slug: "mochi-analytics",
+      name: "Mochi Analytics",
+      tagline: "",
+      stealth: true,
+      icon: "📊",
+      iconBg: "#111827",
+      url: "https://www.replyhey.com?utm_source=devtanna",
+      status: "active",
+      syncRevenue: false,
       // Attach Stripe revenue by listing the IDs, e.g.:
     },
     {
