@@ -59,11 +59,7 @@ export function ProjectCard({
       </p>
 
       <div className="mt-4">
-        <RevenueChart
-          data={chart}
-          currency={revenue?.currency ?? "usd"}
-          gradientId={`grad-${project.slug}`}
-        />
+        <RevenueChart data={chart} gradientId={`grad-${project.slug}`} />
       </div>
     </div>
   );

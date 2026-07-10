@@ -3,35 +3,21 @@
 import {
   Area,
   AreaChart,
-  CartesianGrid,
   ResponsiveContainer,
   XAxis,
-  YAxis,
 } from "recharts";
 import type { ChartPoint } from "@/lib/revenue/read";
-import { formatCompactMoney } from "@/lib/revenue/format";
 
-/**
- * Smooth amber area chart matching the IndiePage cards. Shows two sparse y-axis
- * ticks (a low and a high reference) and month labels along the x-axis.
- */
+/** Smooth amber area chart with month labels along the x-axis. */
 export function RevenueChart({
   data,
-  currency,
   gradientId,
 }: {
   data: ChartPoint[];
-  currency: string;
   gradientId: string;
 }) {
-  const amounts = data.map((d) => d.amount);
-  const max = Math.max(...amounts, 1);
-  // Two reference ticks like the screenshot: ~a quarter and the peak.
-  const lowTick = Math.round((max / 4) * 100) / 100;
-  const ticks = [lowTick, max];
-
   return (
-    <div className="h-[170px] w-full">
+    <div className="h-[100px] w-full">
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart
           data={data}
@@ -43,23 +29,6 @@ export function RevenueChart({
               <stop offset="100%" stopColor="#f5a623" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <CartesianGrid
-            stroke="#e5e7eb"
-            strokeDasharray="4 4"
-            vertical
-            horizontal
-          />
-          <YAxis
-            width={48}
-            axisLine={false}
-            tickLine={false}
-            ticks={ticks}
-            domain={[0, max]}
-            tick={{ fill: "#9ca3af", fontSize: 12 }}
-            tickFormatter={(v: number) =>
-              formatCompactMoney(v * 100, currency)
-            }
-          />
           <XAxis
             dataKey="label"
             axisLine={false}
