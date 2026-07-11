@@ -17,4 +17,4 @@ jobs:
         run: |
           curl -fsS --retry 3 --max-time 90 \
             -H "Authorization: Bearer ${{ secrets.CRON_SECRET }}" \
-            "https://devtanna.com/api/cron/sync-revenue"
+            "https://www.devtanna.com/api/cron/sync-revenue"
