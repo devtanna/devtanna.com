@@ -20,7 +20,9 @@ const nextConfig = {
         headers: [
           {
             key: "Content-Security-Policy",
-            value: "script-src 'self'; connect-src 'self';",
+            // ponytail: 'unsafe-inline' because Next injects inline hydration
+            // scripts; switch to nonce middleware if strict CSP ever matters
+            value: "script-src 'self' 'unsafe-inline'; connect-src 'self';",
           },
         ],
       },

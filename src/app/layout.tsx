@@ -23,10 +23,10 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <Script
-          src="https://devtanna.com/stats/js/script.js"
+          src="/stats/js/script.js"
           data-website-id="09c7f2ba-abdd-4bc8-98cd-20e133a3a2e3"
           data-domain="devtanna.com"
-          data-api="https://devtanna.com/stats/api/event"
+          data-api="/stats/api/event"
           strategy="afterInteractive"
         />
       </head>
